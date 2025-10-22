@@ -1,0 +1,35 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revenue Analysis</title>
+</head>
+
+<body>
+    <h1>Revenue Analysis Report</h1>
+    <div id="revenueData"></div>
+
+    <script>
+        fetch('result.json')
+            .then(response => response.json())
+            .then(data => {
+                const revenueData = document.getElementById('revenueData');
+                revenueData.innerHTML = `
+                    <h2>Total Rows: ${data.row_count}</h2>
+                    <h2>Total Regions: ${data.regions_count}</h2>
+                    <h2>Top 3 Products by Revenue:</h2>
+                    <ul>
+                        ${data.top_n_products_by_revenue.map(product => `<li>${product.product}: $${product.revenue}</li>`).join('')}
+                    </ul>
+                `;
+            })
+            .catch(error => console.error('Error fetching data:', error));
+    </script>
+</body>
+
+</html>
+```
